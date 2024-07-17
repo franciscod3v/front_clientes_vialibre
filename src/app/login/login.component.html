@@ -1,0 +1,32 @@
+<div class="mx-auto h-screen content-center my-auto max-w-[400px] space-y-6 p-6">
+  <div>
+    <p>CLINICA VÍA LIBRE</p>
+  </div>
+  <div class="space-y-2 text-center">
+    <h1 class="text-3xl font-bold">Inicio de Sesión</h1>
+  </div>
+  <form class="space-y-4">
+    <div class="space-y-2">
+      <label>DNI</label>
+      <br>
+      <input class="w-full border-2 p-2 rounded-md border-[#003366]" id="usuario"
+             placeholder="Ingresa tu DNI" required [formControl]="usuario"
+             (keydown)="onKeyPress($event); verificarBoton()"/>
+    </div>
+    <div class="space-y-2">
+      <label>Contraseña</label>
+      <br>
+      <input class="w-full border-2 p-2 rounded-md border-[#003366]" id="password" type="password"
+             placeholder="Ingresa tu contraseña" [formControl]="password"
+             (keydown)="onKeyPress($event); verificarBoton()" required/>
+    </div>
+    <input type="button" class="w-full bg-[#003366] text-white py-2 rounded-md" value="Iniciar Sesión"
+           (click)="login()" [disabled]="!botonClickable"/>
+    <div *ngIf="mensaje" [class]="mensajeClass">{{ mensaje }}</div>
+    <div class="text-center text-sm text-gray-500 dark:text-gray-400">
+      <a href="#" class="underline underline-offset-2" prefetch={false}>
+        Olvidé mi contraseña
+      </a>
+    </div>
+  </form>
+</div>

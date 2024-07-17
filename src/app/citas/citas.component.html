@@ -1,0 +1,72 @@
+<app-encabezados></app-encabezados>
+<div class="grid min-h-screen w-full lg:grid-cols-[280px_1fr]">
+  <app-menu></app-menu>
+  <div class="mx-auto content-center my-auto min-w-[700px] space-y-6 p-6">
+    <div class="grid place-items-center">
+      <button (click)="toggleRegistro()" class="w-40 bg-[#003366] text-white py-2 rounded-md">
+        {{ citaEditando ? 'Editar cita' : 'Solicitar cita' }}
+      </button>
+    </div>
+    <div>
+      <div class="text-2xl font-bold">Registro de citas</div>
+    </div>
+    <div *ngIf="mostrarRegistro || citaEditando" class="modal-overlay" (click)="cerrarModal($event)">
+      <div class="modal-content" (click)="$event.stopPropagation()">
+        <form [formGroup]="formCita" (ngSubmit)="citaEditando ? editarCita() : registrarCita()">
+          <div class="space-y-4">
+            <div class="space-y-2">
+              <label for="especialidad">Especialidad</label>
+              <select class="w-full border p-2 rounded-md" id="especialidad" formControlName="especialidad" (change)="onEspecialidadChange($event)" [formControl]="idEspecialidad">
+                <option value="">Seleccione una especialidad</option>
+                <option *ngFor="let especialidad of especialidades" [value]="especialidad.id">{{ especialidad.especialidad }}</option>
+              </select>
+            </div>
+            <div class="space-y-2">
+              <label for="doctor">Doctor</label>
+              <select class="w-full border p-2 rounded-md" id="doctor" formControlName="doctorId" [formControl]="idDoctor">
+                <option value="">Seleccione un doctor</option>
+                <option *ngFor="let doctor of doctoresEspecialidadElegida" [value]="doctor.id">{{ doctor.nombre }} {{ doctor.apellido }}</option>
+              </select>
+            </div>
+            <div class="space-y-2">
+              <label for="horario">Horario</label>
+              <select class="w-full border p-2 rounded-md" id="horario" formControlName="fechaYHora" [formControl]="fechaElegida">
+                <option value="">Seleccione un horario</option>
+                <option *ngFor="let horario of horarioTotales" [value]="horario.fecha">{{ horario.fecha }}</option>
+              </select>
+            </div>
+          </div>
+          <div class="flex justify-end mt-4 space-x-2">
+            <button type="submit" class="w-40 bg-[#003366] text-white py-2 rounded-md">{{ citaEditando ? 'Guardar cambios' : 'Registrar' }}</button>
+            <button type="button" class="w-40 bg-gray-400 text-white py-2 rounded-md" (click)="toggleRegistro()">Cancelar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <table class="min-w-full divide-y divide-gray-200 border">
+      <thead class="bg-gray-50">
+        <tr>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Especialidad</th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Doctor</th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Fecha</th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Num. Orden</th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Estado</th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Acciones</th>
+        </tr>
+      </thead>
+      <tbody class="bg-white divide-y divide-gray-200">
+        <tr *ngFor="let cita of citas">
+          <td class="px-6 py-4 whitespace-nowrap">{{ cita.especialidad }}</td>
+          <td class="px-6 py-4 whitespace-nowrap">{{ cita.doctor.nombre }} {{ cita.doctor.apellido }}</td>
+          <td class="px-6 py-4 whitespace-nowrap">{{ cita.fechaYHora | date: 'dd/MM/YYYY' }}</td>
+          <td class="px-6 py-4 whitespace-nowrap">{{ cita.orden }}</td>
+          <td class="px-6 py-4 whitespace-nowrap">{{ cita.estado }}</td>
+          <td class="px-6 py-4 whitespace-nowrap">
+            <button (click)="eliminar(cita.id)"
+              class="bg-red-500 text-white py-1 px-2 rounded-md w-30">Cancelar Cita</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

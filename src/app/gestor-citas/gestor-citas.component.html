@@ -1,0 +1,68 @@
+<app-encabezados></app-encabezados>
+<div class="grid min-h-screen w-full lg:grid-cols-[280px_1fr]">
+  <app-menu></app-menu>
+  <div class="mx-auto content-center my-auto min-w-[700px] space-y-6 p-6">
+    <div>
+      <div class="text-2xl font-bold">Listado de Usuarios y Clientes</div>
+    </div>
+    <div *ngIf="mostrarRegistro || usuarioEditando" class="modal-overlay" (click)="cerrarModal($event)">
+      <div class="modal-content" (click)="$event.stopPropagation()">
+        <form (ngSubmit)="editarUsuario()">
+          <div class="space-y-4">
+            <input type="text" [(ngModel)]="formUsuario.diagnostico" name="nombre" placeholder="Nombre" required
+              class="w-full px-3 py-2 border rounded-md" />
+            <div>
+              <button type="submit" class="w-40 bg-[#003366] text-white py-2 rounded-md">{{ usuarioEditando ? 'Editar' : 'Crear' }}
+              </button>
+              <button type="button" (click)="toggleRegistro()" class="w-40 bg-red-500 text-white py-2 rounded-md">
+                Cerrar
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="flex justify-between">
+      <div class="grid place-items-center">
+        <button (click)="toggleRegistro()" class="w-40 bg-[#003366] text-white py-2 rounded-md">
+          {{ usuarioEditando ? 'Editar usuario' : 'Registrar usuario' }}
+        </button>
+      </div>
+    </div>
+    <table class="w-full table-auto text-center">
+      <thead class="bg-gray-100">
+        <tr>
+          <th class="px-3">Id</th>
+          <th class="px-3">Nombre</th>
+          <th class="px-3">Especialidad</th>
+          <th class="px-3">Dia</th>
+          <th class="px-3">Estado</th>
+          <th class="px-3">Diagnostico</th>
+          <th class="px-3">Costo</th>
+          <th class="px-3">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (usuario of citas; track usuario.id) {
+        <tr>
+          <td class="px-3">{{ $index + 1 }}</td>
+          <td class="px-3">{{ usuario.doctor.nombre }}</td>
+          <td class="px-3">{{ usuario.especialidad }}</td>
+          <td class="px-3">{{ usuario.fechaYHora }}</td>
+          <td class="px-3">{{ usuario.estado }}</td>
+          <td class="px-3">{{ usuario.diagnostico }}</td>
+          <td class="px-3">{{ usuario.costo }}</td>
+          <td class="px-3 flex justify-around">
+            <button (click)="editar(usuario)" class="bg-blue-500 text-white py-1 px-2 rounded-md w-20">Editar</button>
+            <button (click)="eliminar(usuario.id)"
+              class="bg-red-500 text-white py-1 px-2 rounded-md w-20">Eliminar</button>
+          </td>
+        </tr>
+        }
+      </tbody>
+    </table>
+    <div class="grid place-items-center">
+      <button class="w-40 bg-[#003366] text-white py-2 rounded-md">Generar reporte</button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,49 @@
+<app-encabezados></app-encabezados>
+<div class="grid min-h-screen w-full lg:grid-cols-[280px_1fr]">
+  <app-menu></app-menu>
+  <div class="mx-auto content-center my-auto min-w-[700px] space-y-6 p-6">
+    <div>
+      <div class="text-2xl font-bold">Listado de Especialidades</div>
+    </div>
+    <div *ngIf="mostrarRegistro || especialidadEditando" class="modal-overlay" (click)="cerrarModal($event)">
+      <div class="modal-content" (click)="$event.stopPropagation()">
+        <form (ngSubmit)="especialidadEditando ? editarEspecialidad() : registrarEspecialidad()">
+          <div class="space-y-4">
+            <input type="text" [(ngModel)]="formEspecialidad.especialidad" name="nombre" placeholder="Nombre" required class="w-full px-3 py-2 border rounded-md" />
+            <div>
+              <button type="submit" class="w-40 bg-[#003366] text-white py-2 rounded-md">{{ especialidadEditando ? 'Editar' : 'Crear' }}</button>
+              <button type="button" (click)="toggleRegistro()" class="w-40 bg-red-500 text-white py-2 rounded-md">Cerrar</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="flex justify-between">
+      <div class="grid place-items-center">
+        <button (click)="toggleRegistro()" class="w-40 bg-[#003366] text-white py-2 rounded-md">{{ especialidadEditando ? 'Editar especialidad' : 'Registrar especialidad' }}</button>
+      </div>
+    </div>
+    <table class="w-full table-auto text-center">
+      <thead class="bg-gray-100">
+        <tr>
+          <th class="px-3">Id</th>
+          <th class="px-3">Nombre</th>
+          <th class="px-3">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let especialidad of especialidades; let i = index; trackBy: trackById">
+          <td class="px-3">{{ i + 1 }}</td>
+          <td class="px-3">{{ especialidad.especialidad }}</td>
+          <td class="px-3 flex justify-around">
+            <button (click)="editar(especialidad)" class="bg-blue-500 text-white py-1 px-2 rounded-md w-20">Editar</button>
+            <button (click)="eliminar(especialidad.id)" class="bg-red-500 text-white py-1 px-2 rounded-md w-20">Eliminar</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="grid place-items-center">
+      <button class="w-40 bg-[#003366] text-white py-2 rounded-md">Generar reporte</button>
+    </div>
+  </div>
+</div>
