@@ -85,7 +85,7 @@ export class GestorCitasComponent {
           ...usuarioExistente,
           diagnostico: this.formUsuario.diagnostico
         };
-        this.http.post("http://localhost:8080/usuario", usuarioActualizado, {
+        this.http.post("http://localhost:8080/cita", usuarioActualizado, {
           headers: new HttpHeaders({
             Authorization: 'Bearer ' + token
           })
@@ -109,7 +109,7 @@ export class GestorCitasComponent {
     const confirmar = window.confirm('¿Estás seguro que deseas eliminar este usuario?');
     const token = localStorage.getItem('token');
     if (confirmar) {
-      this.http.get<Usuarios>(`http://localhost:8080/usuario/${id}`, {
+      this.http.get<Usuarios>(`http://localhost:8080/cita/${id}`, {
         headers: new HttpHeaders({
           Authorization: 'Bearer ' + token
         })

@@ -10,10 +10,6 @@
         <form (ngSubmit)="horarioEditando ? editarHorario() : registrarHorario()">
           <div class="space-y-4">
             <input type="date" [(ngModel)]="formHorario.fecha" name="fecha" min="{{hoy | date:'yyyy-MM-dd'}}" required class="w-full px-3 py-2 border rounded-md" />
-            <div *ngFor="let detalle of formHorario.detalleHorarios; let i = index" class="space-y-2">
-              <input type="text" [(ngModel)]="detalle.especialidad" name="especialidad{{i}}" placeholder="Especialidad" required class="w-full px-3 py-2 border rounded-md" />
-              <input type="number" [(ngModel)]="detalle.citas.length" name="numCitas{{i}}" placeholder="Número de Citas" required class="w-full px-3 py-2 border rounded-md" />
-            </div>
             <div>
               <button type="submit" class="w-40 bg-[#003366] text-white py-2 rounded-md">{{ horarioEditando ? 'Editar' : 'Crear' }}</button>
               <button type="button" (click)="toggleRegistro()" class="w-40 bg-red-500 text-white py-2 rounded-md">Cerrar</button>
@@ -48,8 +44,5 @@
         </tr>
       </tbody>
     </table>
-    <div class="grid place-items-center">
-      <button class="w-40 bg-[#003366] text-white py-2 rounded-md">Generar reporte</button>
-    </div>
   </div>
 </div>

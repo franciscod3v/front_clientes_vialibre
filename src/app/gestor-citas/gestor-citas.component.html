@@ -3,16 +3,16 @@
   <app-menu></app-menu>
   <div class="mx-auto content-center my-auto min-w-[700px] space-y-6 p-6">
     <div>
-      <div class="text-2xl font-bold">Listado de Usuarios y Clientes</div>
+      <div class="text-2xl font-bold">Gestor de Citas</div>
     </div>
     <div *ngIf="mostrarRegistro || usuarioEditando" class="modal-overlay" (click)="cerrarModal($event)">
       <div class="modal-content" (click)="$event.stopPropagation()">
         <form (ngSubmit)="editarUsuario()">
           <div class="space-y-4">
-            <input type="text" [(ngModel)]="formUsuario.diagnostico" name="nombre" placeholder="Nombre" required
+            <input type="text" [(ngModel)]="formUsuario.diagnostico" name="Diagnostico" placeholder="Diagnostico" required
               class="w-full px-3 py-2 border rounded-md" />
             <div>
-              <button type="submit" class="w-40 bg-[#003366] text-white py-2 rounded-md">{{ usuarioEditando ? 'Editar' : 'Crear' }}
+              <button type="submit" class="w-40 bg-[#003366] text-white py-2 rounded-md">{{ usuarioEditando ? 'Guardar' : 'Crear' }}
               </button>
               <button type="button" (click)="toggleRegistro()" class="w-40 bg-red-500 text-white py-2 rounded-md">
                 Cerrar
@@ -20,13 +20,6 @@
             </div>
           </div>
         </form>
-      </div>
-    </div>
-    <div class="flex justify-between">
-      <div class="grid place-items-center">
-        <button (click)="toggleRegistro()" class="w-40 bg-[#003366] text-white py-2 rounded-md">
-          {{ usuarioEditando ? 'Editar usuario' : 'Registrar usuario' }}
-        </button>
       </div>
     </div>
     <table class="w-full table-auto text-center">
@@ -39,7 +32,7 @@
           <th class="px-3">Estado</th>
           <th class="px-3">Diagnostico</th>
           <th class="px-3">Costo</th>
-          <th class="px-3">Acciones</th>
+          <th class="px-3 w-[300px]">Acciones</th>
         </tr>
       </thead>
       <tbody>
@@ -53,7 +46,7 @@
           <td class="px-3">{{ usuario.diagnostico }}</td>
           <td class="px-3">{{ usuario.costo }}</td>
           <td class="px-3 flex justify-around">
-            <button (click)="editar(usuario)" class="bg-blue-500 text-white py-1 px-2 rounded-md w-20">Editar</button>
+            <button (click)="editar(usuario)" class="bg-blue-500 text-white py-1 px-2 rounded-md w-25">Diagnostico</button>
             <button (click)="eliminar(usuario.id)"
               class="bg-red-500 text-white py-1 px-2 rounded-md w-20">Eliminar</button>
           </td>
@@ -61,8 +54,5 @@
         }
       </tbody>
     </table>
-    <div class="grid place-items-center">
-      <button class="w-40 bg-[#003366] text-white py-2 rounded-md">Generar reporte</button>
-    </div>
   </div>
 </div>
